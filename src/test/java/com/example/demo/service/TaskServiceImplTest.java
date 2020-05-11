@@ -52,7 +52,7 @@ class TaskServiceImplTest {
         Optional<Task> task = taskService.getTask(1);
         
       //取得できたことを確認
-        assertEquals( "JUnitを学習", task.get().getTitle());
+        assertEquals( "Learn JUnit", task.get().getTitle());
     }
     
 

@@ -1,7 +1,7 @@
   
 buildscript {
     ext {
-        springBootVersion = '2.1.1.RELEASE'
+        springBootVersion = '2.1.1.RELEASE'        
     }
     repositories {
         mavenCentral()
@@ -13,11 +13,17 @@ buildscript {
 }
 
 apply plugin: 'java'
+apply plugin: 'jacoco'
 apply plugin: 'eclipse'
 apply plugin: 'idea'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 apply plugin: 'org.junit.platform.gradle.plugin'
+apply plugin: 'war'
+apply plugin: 'checkstyle'
+apply plugin: 'findbugs'
+apply plugin: 'pmd'
+
 
 group = 'com.example'
 version = '0.0.1-SNAPSHOT'
@@ -54,4 +60,87 @@ dependencies {
     testImplementation('org.mockito:mockito-junit-jupiter:2.21.0')
     
 }
-	
+
+war {
+    baseName = "WebToDoAnswer"
+    version =  version
+}
+
+checkstyle {
+    // 失敗しても後続の処理を継続させる
+    ignoreFailures = true
+    sourceSets = [sourceSets.main]
+    toolVersion = '7.6.1'
+}
+
+findbugs {
+    // 失敗しても後続の処理を継続させる
+    ignoreFailures = true
+    sourceSets = [sourceSets.main]
+    toolVersion = "3.0.1"
+}
+
+pmd {
+    // 失敗しても後続の処理を継続させる
+    ignoreFailures = true
+    sourceSets = [sourceSets.main]
+}
+
+tasks.withType(Pmd) {
+    reports {
+      xml.enabled = true
+    }
+}
+
+// CPD（重複コードチェック処理）をCheckタスクに追加
+check.doLast {
+    File outputDir = new File("$reportsDir/cpd/")
+    outputDir.mkdirs()
+
+    ant.taskdef(
+        name: 'cpd', 
+        classname: 'net.sourceforge.pmd.cpd.CPDTask',
+        classpath: configurations.pmd.asPath)
+
+    ant.cpd(
+        minimumTokenCount: '100',
+        format: 'xml',
+        encoding: defaultEncoding,
+        outputFile: new File(outputDir, 'cpd.xml')
+    ) {
+        fileset(dir: "src/main/java") {
+            include(name: '**/*.java')
+        }
+    }
+}
+
+javadoc {
+    failOnError = false
+    // 好みのレベルで
+    options.memberLevel = JavadocMemberLevel.PRIVATE
+}
+
+test {
+    // 失敗しても後続の処理を継続させる
+    ignoreFailures = true
+    reports {
+        junitXml.enabled = true
+    }
+}
+
+jacoco {
+    toolVersion = '3.0.5'
+}
+
+jacocoTestReport {
+    reports {
+      xml.enabled = true
+    }
+
+    // カバレッジレポートからテストクラスを除外
+    afterEvaluate { 
+        classDirectories = files(classDirectories.files.collect {
+            fileTree(dir: it, exclude: ['**/*Test.class']) 
+        })
+    }
+}
