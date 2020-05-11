@@ -61,11 +61,6 @@ dependencies {
     
 }
 
-war {
-    baseName = "WebToDoAnswer"
-    version =  version
-}
-
 checkstyle {
     // 失敗しても後続の処理を継続させる
     ignoreFailures = true
