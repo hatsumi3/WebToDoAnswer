@@ -116,7 +116,6 @@ javadoc {
     options.charSet = 'UTF-8'
     options.encoding = 'UTF-8'
 }
-}
 
 test {
     // 失敗しても後続の処理を継続させる
