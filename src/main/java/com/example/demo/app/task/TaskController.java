@@ -61,7 +61,6 @@ public class TaskController {
      * @param taskForm
      * @param result
      * @param model
-     * @param principal
      * @return
      */
     @PostMapping("/insert")
@@ -130,7 +129,7 @@ public class TaskController {
      * タスクidを取得し、一件のデータ更新
      * @param taskForm
      * @param result
-     * @param id
+     * @param taskId
      * @param model
      * @param redirectAttributes
      * @return
