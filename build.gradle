@@ -125,7 +125,7 @@ check.doLast {
     ant.cpd(
         minimumTokenCount: '100',
         format: 'xml',
-        encoding: defaultEncoding,
+        encoding: 'UTF-8',
         outputFile: new File(outputDir, 'cpd.xml')
     ) {
         fileset(dir: "src/main/java") {
