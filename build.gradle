@@ -151,7 +151,8 @@ test {
 }
 
 jacoco {
-    toolVersion = '0.7.5.201505241946'
+//    toolVersion = '0.7.5.201505241946'
+    toolVersion = '0.8.1'
 }
 
 jacocoTestReport {
