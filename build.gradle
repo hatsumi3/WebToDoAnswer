@@ -12,10 +12,11 @@ buildscript {
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
         classpath('org.junit.platform:junit-platform-gradle-plugin:1.0.0')
-        classpath "gradle.plugin.com.github.spotbugs.snom:spotbugs-gradle-plugin:4.0.8"
+        classpath "gradle.plugin.com.github.spotbugs.snom:spotbugs-gradle-plugin:4.2.0"
     }
 }
 
+apply plugin: "com.github.spotbugs"
 apply plugin: 'java'
 apply plugin: 'jacoco'
 apply plugin: 'eclipse'
@@ -61,15 +62,14 @@ dependencies {
     testRuntimeOnly ('org.junit.platform:junit-platform-launcher')    
     testImplementation('org.junit.platform:junit-platform-commons:1.5.2')
     testImplementation('org.mockito:mockito-core:2.21.0')
-    testImplementation('org.mockito:mockito-junit-jupiter:2.21.0')   
+    testImplementation('org.mockito:mockito-junit-jupiter:2.21.0')
 }
 
-//spotbugs {
-//	ignoreFailures = true
+spotbugs {
+	ignoreFailures = true
 //	sourceSets = [sourceSets.main]
-// 	toolVersion = '3.1.12'
-//}
-
+ 	toolVersion = '3.1.12'
+}
 // To generate an HTML report instead of XML
 //tasks.withType(com.github.spotbugs.SpotBugsTask) {
 //  reports.xml.enabled = false
@@ -161,9 +161,9 @@ jacocoTestReport {
     }
 
     // カバレッジレポートからテストクラスを除外
-    afterEvaluate { 
-        classDirectories = files(classDirectories.files.collect {
-            fileTree(dir: it, exclude: ['**/*Test.class']) 
-        })
-    }
+//    afterEvaluate { 
+//        classDirectories = files(classDirectories.files.collect {
+//            fileTree(dir: it, exclude: ['**/*Test.class']) 
+//        })
+//    }
 }
