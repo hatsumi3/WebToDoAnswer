@@ -6,7 +6,7 @@ on:
 
 jobs:
   build:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - name: Set up JDK 11
@@ -14,7 +14,6 @@ jobs:
         with:
           java-version: '11'
           distribution: 'adopt'
-          architecture: x64
       - name: Build with Gradle
         run: ./gradlew build
   test:
@@ -34,4 +33,4 @@ jobs:
         if: always()
         with:
           name: test results
-
+          path: build/test-results/test
