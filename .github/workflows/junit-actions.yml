@@ -23,4 +23,4 @@ jobs:
         if: always()
         with:
           name: test results
-          path: build/test-results/test
+          path: build/test-results/junit-platform
