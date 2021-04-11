@@ -29,6 +29,9 @@ jobs:
           architecture: x64
       - name: test settings
         run: ./gradlew test jacocoTestReport -x classes -x testClasses
-      - name: test
-        run: junit "build/test-results/junit-platform/*.xml"
+      - name: Upload Test Report
+        uses: actions/upload-artifact@v1
+        if: always()
+        with:
+          name: test results
 
